@@ -6,7 +6,7 @@ import os
 import random
 
 HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
-PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
+PORT = 65434  # Port to listen on (non-privileged ports are > 1023)
 buffer_size = 1024
 PlayerPoints = 0
 ComputerPoints = 0
@@ -106,11 +106,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as TCPServerSocket:
             if Board[indice1] != 'x':
                 if Board[indice2] != 'x':
                     if int(Board[indice1]==Board[indice2]):
-                        Cards = str(Board[indice1])+","+str(Board[indice2])
+                        Cards = str(Board[indice1])+","+str(Board[indice2])+","+str(PlayerPoints)+","+str(ComputerPoints)
                         if(Board[indice1] != 'x'):
                             PlayerPoints += 1
                             Board[indice1] = "x"
                             Board[indice2] = "x"
+                            if(level == 1) and (ComputerPoints + PlayerPoints) == 8:
+                                Client_conn.sendall(b"*")
+                            if(level == 2) and (ComputerPoints + PlayerPoints) == 18:
+                                Client_conn.sendall(b"*")
                     else:
                         while True:
                             indiceA = GenRandIndex(level) 
@@ -119,12 +123,16 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as TCPServerSocket:
                                 if Board[indiceA] != 'x':
                                     if Board[indiceB] != 'x':
                                         break
-                        Cards = str(Board[indice1])+","+str(Board[indice2])+","+str(indiceA)+","+str(indiceB)+","+str(Board[indiceA])+","+str(Board[indiceB])
+                        Cards = str(Board[indice1])+","+str(Board[indice2])+","+str(indiceA)+","+str(indiceB)+","+str(Board[indiceA])+","+str(Board[indiceB])+","+str(PlayerPoints)+","+str(ComputerPoints)
 
                         if int(Board[indiceA]) == int(Board[indiceB]):
                             ComputerPoints += 1
                             Board[indiceA] = 'x'
                             Board[indiceB] = 'x'
+                            if(level == 1) and (ComputerPoints + PlayerPoints) == 8:
+                                Client_conn.sendall(b"*")
+                            if(level == 2) and (ComputerPoints + PlayerPoints) == 18:
+                                Client_conn.sendall(b"*")
 
                         PrintBoard(level,Board)
             if indice1 == indice2:

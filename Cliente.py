@@ -7,7 +7,7 @@ import os
 import sys
 
 HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 65432  # The port used by the server
+PORT = 65434  # The port used by the server
 buffer_size = 1024
 
 transitions = {
@@ -156,6 +156,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as TCPClientSocket:
                             if valor2 != 'x':
                                 if(int(valor1) == int(valor2)):
                                     PrintBoard(level,Board)
+                                    print("Jugador: ",Values.split(',')[6])
+                                    print("Computadora: ",Values.split(',')[7])
                                 else:
                                     indice3 = int(Values.split(',')[2])
                                     indice4 = int(Values.split(',')[3])
@@ -168,12 +170,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as TCPClientSocket:
                                     Board[indice1]="-"
                                     Board[indice2]="-"
                                     PrintBoard(level,Board)
-                                    
+                                    print("Jugador: ",Values.split(',')[6])
+                                    print("Computadora: ",Values.split(',')[7])
                                     Board[indice3]=valor3
                                     Board[indice4]=valor4
 
                                     if int(valor3) == int(valor4):
                                         PrintBoard(level,Board)
+                                        print("Jugador: ",Values.split(',')[6])
+                                        print("Computadora: ",Values.split(',')[7])
                                     else:
                                         PrintBoard(level,Board)
                                         print("COMPUTADORA")
@@ -181,6 +186,8 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as TCPClientSocket:
                                         Board[indice3]="-"
                                         Board[indice4]="-"
                                         PrintBoard(level,Board)
+                                        print("Jugador: ",Values.split(',')[6])
+                                        print("Computadora: ",Values.split(',')[7])
                                 #SeeCard(coord,Board,data.decode(),level)
 
                         
